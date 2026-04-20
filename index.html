@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Hail – Weekly Route Plan (April 2026)</title>
+<style>
+    :root{
+      --pageBg: var(--bg);
+      --panelBg: rgba(255,255,255,.72);
+
+      /* Fonts (offline-safe / iOS-friendly) */
+      --fontBody: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Arial, sans-serif;
+      --fontTitle: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Avenir Next", "Segoe UI", Roboto, Arial, sans-serif;
+      --fontPromoter: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Avenir Next", "Segoe UI", Roboto, Arial, sans-serif;
+
+      --bg:#EEF5F6;
+      --titleColor:#B3375A;
+      --promoterColor:#46878A;
+
+      --text:#111;
+      --muted:#555;
+      --link:#0077cc;
+
+      /* Button colors (03 → 09) */
+
+      --sun:#005F73;
+      --mon:#0081A7;
+      --tue:#00AFB9;
+      --wed:#DFFFFD;
+      --thu:#FED9B7;
+      --fri:#F6A89E;
+      --sat:#F07167;
+ /* 09 */
+
+      --shadowBtn: 0 4px 10px rgba(0,0,0,.18);
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      font-family: var(--fontBody);
+      background: var(--pageBg);
+      color: var(--text);
+      padding: 14px 14px 28px;
+    }
+
+    .wrap{
+      max-width: 980px;
+      margin: 0 auto;
+      text-align:left;
+    }
+
+    /* Title: 2 lines only, centered */
+    h1{
+      font-family: var(--fontTitle);
+      text-align:center;
+      color: var(--titleColor);
+      margin: 16px 0 10px;
+      line-height: 1.05;
+      font-weight: 800;
+    }
+    .titleLine1{
+      display:block;
+      font-size: clamp(22px, 6vw, 40px);
+      white-space: nowrap;
+    }
+    .titleLine2{
+      display:block;
+      font-size: clamp(18px, 5.2vw, 32px);
+      margin-top: 6px;
+      white-space: nowrap;
+    }
+
+    /* Subtitle under title (exact text) */
+    .subtitle{
+      text-align:center;
+      color: var(--muted);
+      font-size: clamp(12px, 3.2vw, 14px);
+      margin: 0 0 18px;
+      line-height: 1.35;
+    }
+
+    /* Promoter name: LEFT aligned */
+    h2{
+      font-family: var(--fontPromoter);
+      font-size: clamp(18px, 4.6vw, 28px);
+      color: var(--promoterColor);
+      margin: 14px 0 10px;
+      font-weight: 800;
+      text-align:left;
+    }
+
+    /* No white cards */
+    .promoter{
+      margin: 0;
+      padding: 0;
+      background: transparent;
+    }
+
+    /* Buttons: smaller + LEFT aligned */
+    .days{
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 8px 0 10px;
+      align-items: stretch;
+      justify-items: stretch;
+    }
+
+    .dayBtn{
+      width: 100%;
+      padding: 11px 0;
+      border: 0;
+      border-radius: 28px;
+      color:#fff; /* ALWAYS WHITE */
+      font-size: 14px;
+      font-weight: 800;
+      cursor:pointer;
+      box-shadow: var(--shadowBtn);
+      transition: transform .12s ease, filter .12s ease;
+      user-select:none;
+      text-align:center;
+      white-space: nowrap;
+    }
+    .dayBtn:active{ transform: scale(.98); }
+    .dayBtn:hover{ filter: brightness(1.03); }
+    .dayBtn[aria-expanded="true"]{
+      outline: 3px solid rgba(0,0,0,.10);
+      outline-offset: 2px;
+    }
+
+    .dayBtn.sun{ background: var(--sun); }
+    .dayBtn.mon{ background: var(--mon); }
+    .dayBtn.tue{ background: var(--tue); }
+    .dayBtn.wed{
+      background: var(--wed);
+      color:#fff; /* white fill */
+      -webkit-text-stroke: 0.55px #005F73; /* thin dark outline */
+      /* Fallback outline for browsers without text-stroke */
+      text-shadow:
+        0.6px 0   0 #005F73,
+       -0.6px 0   0 #005F73,
+        0   0.6px 0 #005F73,
+        0  -0.6px 0 #005F73;
+    }
+    .dayBtn.thu{ background: var(--thu); }
+    .dayBtn.fri{ background: var(--fri); }
+    .dayBtn.sat{ background: var(--sat); }
+
+    /* Panels */
+    .panel{
+      display:none;
+      margin: 0 0 10px;
+      max-width: 720px;
+      background: var(--panelBg);
+      padding: 10px 12px;
+      border-radius: 10px;
+      text-align:left;
+    }
+    .panel.show{ display:block; }
+
+    .row{
+      margin: 4px 0;
+      line-height: 1.35;
+      font-size: 14px;
+    }
+    .label{ font-weight: 800; margin-right: 6px; }
+
+    a{ color: var(--link); font-weight: 700; text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+
+    /* Divider */
+    hr.divider{
+      border: none;
+      border-bottom: 2px solid var(--promoterColor);
+      width: 100%;
+      margin: 18px 0;
+    }
+
+    /* Bottom note */
+    p.note{
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 28px;
+      text-align:center;
+    }
+    /* Top bar (toggle in its own row) */
+    .topbar{
+      display:flex;
+      justify-content:flex-start;
+      align-items:center;
+      margin: 8px 0 6px;
+    }
+
+    
+    .themeToggle{
+      appearance:none;
+      border: 2px solid rgba(0,0,0,.28);
+      background: rgba(255,255,255,.92);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(0,0,0,.10);
+      user-select: none;
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+    }
+    html[data-theme="dark"] .themeToggle{
+      border-color: rgba(255,255,255,.32);
+      background: rgba(18,18,18,.72);
+      color: #fff;
+      box-shadow: 0 6px 16px rgba(0,0,0,.35);
+    }
+    .themeToggle:active{ transform: scale(.99); }
+@media (max-width: 420px){
+      .dayBtn{ font-size: 13px; padding: 10px 0; border-radius: 24px; }
+      .days{ gap: 8px; }
+      .panel{ max-width: 92vw; }
+    }
+  
+    /* ===== Dark theme (manual toggle) ===== */
+    html[data-theme="dark"]{
+      --pageBg:#0b1220;
+      --panelBg: rgba(255,255,255,.10);
+      --text:#f2f5f9;
+      --muted:#b8c0cc;
+      --link:#7fb7ff;
+      --toggleBg: rgba(255,255,255,.10);
+      --toggleText: #f2f5f9;
+      --toggleBorder: rgba(255,255,255,.18);
+    }
+
+    /* If user didn't choose, follow system preference */
+    @media (prefers-color-scheme: dark){
+      html:not([data-theme]){
+        --pageBg:#0b1220;
+        --panelBg: rgba(255,255,255,.10);
+        --text:#f2f5f9;
+        --muted:#b8c0cc;
+        --link:#7fb7ff;
+        --toggleBg: rgba(255,255,255,.10);
+        --toggleText: #f2f5f9;
+        --toggleBorder: rgba(255,255,255,.18);
+      }
+    }
+
+  
+/* WED text: outlined ONLY in Light Mode */
+.dayBtn.wed{ color:#ffffff; } /* default */
+
+body:not(.dark) .dayBtn.wed{
+  color:#ffffff;                 /* white fill */
+  -webkit-text-stroke: 0.6px #B5C1C1;  /* very light gray outline */
+  text-stroke: 0.6px #B5C1C1;
+  text-shadow: 0 0 0.6px rgba(181,193,193,0.35); /* soft edge */
+}
+
+body.dark .dayBtn.wed{
+  -webkit-text-stroke: 0px transparent; /* no outline in Dark Mode */
+  text-shadow: none;
+}
+  </style>
+<!-- Fonts: Poppins (Title) + Inter (Body) -->
+</head>
+<body>
+<div class="wrap">
+<div class="topbar">
+<button class="themeToggle" id="themeToggle" type="button">Dark Mode 🌙</button>
+</div>
+<h1>
+<span class="titleLine1">Hail – Weekly Route Plan</span>
+<span class="titleLine2">(April 2026)</span>
+</h1>
+<p class="subtitle">Weekly pattern (Sunday → Saturday). Tap a day to show details. Location links open Google Maps.</p>
+<!-- 1) Osman -->
+<section class="promoter" data-promoter="osman">
+<h2>Osman Alawadh</h2>
+<div class="days">
+<button aria-expanded="false" class="dayBtn sun" data-target="osman-sun">SUN</button>
+<button aria-expanded="false" class="dayBtn mon" data-target="osman-mon">MON</button>
+<button aria-expanded="false" class="dayBtn tue" data-target="osman-tue">TUE</button>
+<button aria-expanded="false" class="dayBtn wed" data-target="osman-wed">WED</button>
+<button aria-expanded="false" class="dayBtn thu" data-target="osman-thu">THU</button>
+<button aria-expanded="false" class="dayBtn fri" data-target="osman-fri">FRI</button>
+<button aria-expanded="false" class="dayBtn sat" data-target="osman-sat">SAT</button>
+</div>
+<div class="panel" id="osman-sun">
+<div class="row"><span class="label">Day off:</span>Day off</div>
+</div>
+<div class="panel" id="osman-mon">
+<div class="row"><span class="label">Outlet:</span>HAI_Anwan Al Waha Ghazayat_DS(GT)_MN_BR</div>
+<div class="row"><span class="label">Unicode:</span>966131415096</div>
+<div class="row"><a href="https://maps.app.goo.gl/22cVcNUCt437x5Hh9?g_st=ipc" rel="noopener" target="_blank">Open Google Maps</a></div>
+</div>
+<div class="panel" id="osman-tue">
+<div class="row"><span class="label">Outlet:</span>HAI_Anwan Al Waha Ghazayat_DS(GT)_MN_BR</div>
+<div class="row"><span class="label">Unicode:</span>966131415096</div>
+<div class="row"><a href="https://maps.app.goo.gl/22cVcNUCt437x5Hh9?g_st=ipc" rel="noopener" target="_blank">Open Google Maps</a></div>
+</div>
+<div class="panel" id="osman-wed">
+<div class="row"><span class="label">Outlet:</span>HAI_Anwan Al Waha Ghazayat_DS(GT)_MN_BR</div>
+<div class="row"><span class="label">Unicode:</span>966131415096</div>
+<div class="row"><a href="https://maps.app.goo.gl/22cVcNUCt437x5Hh9?g_st=ipc" rel="noopener" target="_blank">Open Google Maps</a></div>
+</div>
+<div class="panel" id="osman-thu">
+<div class="row"><span class="label">Outlet:</span>HAI_Anwan Al Waha Ghazayat_DS(GT)_MN_BR</div>
+<div class="row"><span class="label">Unicode:</span>966131415096</div>
+<div class="row"><a href="https://maps.app.goo.gl/22cVcNUCt437x5Hh9?g_st=ipc" rel="noopener" target="_blank">Open Google Maps</a></div>
+</div>
+<div class="panel" id="osman-fri">
+<div class="row"><span class="label">Outlet:</span>HAI_Anwan Al Waha Ghazayat_DS(GT)_MN_BR</div>
+<div class="row"><span class="label">Unicode:</span>966131415096</div>
+<div class="row"><a href="https://maps.app.goo.gl/22cVcNUCt437x5Hh9?g_st=ipc" rel="noopener" target="_blank">Open Google Maps</a></div>
+</div>
+<div class="panel" id="osman-sat">
+<div class="row"><span class="label">Outlet:</span>HAI_Anwan Al Waha Ghazayat_DS(GT)_MN_BR</div>
+<div class="row"><span class="label">Unicode:</span>966131415096</div>
+<div class="row"><a href="https://maps.app.goo.gl/22cVcNUCt437x5Hh9?g_st=ipc" rel="noopener" target="_blank">Open Google Maps</a></div>
+</div>
+</section>
+<hr class="divider"/>
+<!-- 4) Mahmoud -->
+<section class="promoter" data-promoter="mahmoud">
+<h2>Mahmoud Monther Jabr</h2>
+<div class="days">
+<button aria-expanded="false" class="dayBtn sun" data-target="mahmoud-sun">SUN</button>
+<button aria-expanded="false" class="dayBtn mon" data-target="mahmoud-mon">MON</button>
+<button aria-expanded="false" class="dayBtn tue" data-target="mahmoud-tue">TUE</button>
+<button aria-expanded="false" class="dayBtn wed" data-target="mahmoud-wed">WED</button>
+<button aria-expanded="false" class="dayBtn thu" data-target="mahmoud-thu">THU</button>
+<button aria-expanded="false" class="dayBtn fri" data-target="mahmoud-fri">FRI</button>
+<button aria-expanded="false" class="dayBtn sat" data-target="mahmoud-sat">SAT</button>
+</div>
+<div class="panel" id="mahmoud-sun">
+<div class="row"><span class="label">Day off:</span>Day off</div>
+</div>
+<div class="panel" id="mahmoud-mon">
+<div class="row"><span class="label">Outlet:</span>HAI_Markaz Mutlaq Nasar_DS(GT)_MN_BR</div>
+<div class="row"><span class="label">Unicode:</span>966123117488</div>
+<div class="row"><a href="https://maps.app.goo.gl/Mv32T3YYyqb7gSBg7?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
+</div>
+<div class="panel" id="mahmoud-tue">
+<div class="row"><span class="label">Outlet:</span>HAI_Markaz Mutlaq Nasar_DS(GT)_MN_BR</div>
+<div class="row"><span class="label">Unicode:</span>966123117488</div>
+<div class="row"><a href="https://maps.app.goo.gl/Mv32T3YYyqb7gSBg7?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
+</div>
+<div class="panel" id="mahmoud-wed">
+<div class="row"><span class="label">Outlet:</span>HAI_Markaz Mutlaq Nasar_DS(GT)_MN_BR</div>
+<div class="row"><span class="label">Unicode:</span>966123117488</div>
+<div class="row"><a href="https://maps.app.goo.gl/Mv32T3YYyqb7gSBg7?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
+</div>
+<div class="panel" id="mahmoud-thu">
+<div class="row"><span class="label">Outlet:</span>HAI_Markaz Mutlaq Nasar_DS(GT)_MN_BR</div>
+<div class="row"><span class="label">Unicode:</span>966123117488</div>
+<div class="row"><a href="https://maps.app.goo.gl/Mv32T3YYyqb7gSBg7?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
+</div>
+<div class="panel" id="mahmoud-fri">
+<div class="row"><span class="label">Outlet:</span>HAI_Markaz Mutlaq Nasar_DS(GT)_MN_BR</div>
+<div class="row"><span class="label">Unicode:</span>966123117488</div>
+<div class="row"><a href="https://maps.app.goo.gl/Mv32T3YYyqb7gSBg7?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
+</div>
+<div class="panel" id="mahmoud-sat">
+<div class="row"><span class="label">Outlet:</span>HAI_Markaz Mutlaq Nasar_DS(GT)_MN_BR</div>
+<div class="row"><span class="label">Unicode:</span>966123117488</div>
+<div class="row"><a href="https://maps.app.goo.gl/Mv32T3YYyqb7gSBg7?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
+</div>
+</section>
+<hr class="divider"/>
+<!-- 2) Mamdouh -->
+<section class="promoter" data-promoter="mamdouh">
+<h2>Mamdouh Auwad Alshammari</h2>
+<div class="days">
+<button aria-expanded="false" class="dayBtn sun" data-target="jamal-sun">SUN</button>
+<button aria-expanded="false" class="dayBtn mon" data-target="jamal-mon">MON</button>
+<button aria-expanded="false" class="dayBtn tue" data-target="jamal-tue">TUE</button>
+<button aria-expanded="false" class="dayBtn wed" data-target="jamal-wed">WED</button>
+<button aria-expanded="false" class="dayBtn thu" data-target="jamal-thu">THU</button>
+<button aria-expanded="false" class="dayBtn fri" data-target="jamal-fri">FRI</button>
+<button aria-expanded="false" class="dayBtn sat" data-target="jamal-sat">SAT</button>
+</div>
+<div class="panel" id="jamal-sun"><div class="row"><span class="label">Day off:</span>Day off</div></div>
+<div class="panel" id="jamal-mon">
+<div class="row"><span class="label">Outlet:</span>HAI_Waqt Ranz_DS(GT)_MN_BR</div>
+<div class="row"><span class="label">Unicode:</span>96612361117629</div>
+<div class="row"><a href="https://maps.app.goo.gl/oJ6LW5DqKoM47aJE6?g_st=ic" rel="noopener" target="_blank">Open Google Maps</a></div>
+</div>
+<div class="panel" id="jamal-tue">
+<div class="row"><span class="label">Outlet:</span>HAI_Waqt Ranz_DS(GT)_MN_BR</div>
+<div class="row"><span class="label">Unicode:</span>96612361117629</div>
+<div class="row"><a href="https://maps.app.goo.gl/oJ6LW5DqKoM47aJE6?g_st=ic" rel="noopener" target="_blank">Open Google Maps</a></div>
+</div>
+<div class="panel" id="jamal-wed">
+<div class="row"><span class="label">Outlet:</span>HAI_Waqt Ranz_DS(GT)_MN_BR</div>
+<div class="row"><span class="label">Unicode:</span>96612361117629</div>
+<div class="row"><a href="https://maps.app.goo.gl/oJ6LW5DqKoM47aJE6?g_st=ic" rel="noopener" target="_blank">Open Google Maps</a></div>
+</div>
+<div class="panel" id="jamal-thu">
+<div class="row"><span class="label">Outlet:</span>HAI_Waqt Ranz_DS(GT)_MN_BR</div>
+<div class="row"><span class="label">Unicode:</span>96612361117629</div>
+<div class="row"><a href="https://maps.app.goo.gl/oJ6LW5DqKoM47aJE6?g_st=ic" rel="noopener" target="_blank">Open Google Maps</a></div>
+</div>
+<div class="panel" id="jamal-fri">
+<div class="row"><span class="label">Outlet:</span>HAI_Waqt Ranz_DS(GT)_MN_BR</div>
+<div class="row"><span class="label">Unicode:</span>96612361117629</div>
+<div class="row"><a href="https://maps.app.goo.gl/oJ6LW5DqKoM47aJE6?g_st=ic" rel="noopener" target="_blank">Open Google Maps</a></div>
+</div>
+<div class="panel" id="jamal-sat">
+<div class="row"><span class="label">Outlet:</span>HAI_Waqt Ranz_DS(GT)_MN_BR</div>
+<div class="row"><span class="label">Unicode:</span>96612361117629</div>
+<div class="row"><a href="https://maps.app.goo.gl/oJ6LW5DqKoM47aJE6?g_st=ic" rel="noopener" target="_blank">Open Google Maps</a></div>
+</div>
+</section>
+<hr class="divider"/>
+<!-- 3) Baher -->
+<section class="promoter" data-promoter="baher">
+<h2>Baher Emadedin Shalabi</h2>
+<div class="days">
+<button aria-expanded="false" class="dayBtn sun" data-target="baher-sun">SUN</button>
+<button aria-expanded="false" class="dayBtn mon" data-target="baher-mon">MON</button>
+<button aria-expanded="false" class="dayBtn tue" data-target="baher-tue">TUE</button>
+<button aria-expanded="false" class="dayBtn wed" data-target="baher-wed">WED</button>
+<button aria-expanded="false" class="dayBtn thu" data-target="baher-thu">THU</button>
+<button aria-expanded="false" class="dayBtn fri" data-target="baher-fri">FRI</button>
+<button aria-expanded="false" class="dayBtn sat" data-target="baher-sat">SAT</button>
+</div>
+<div class="panel" id="baher-sun">
+<div class="row"><span class="label">Outlet:</span>HAI_T Ghanam Nuqra_DS(GT)_MN_BR</div>
+<div class="row"><span class="label">Unicode:</span>96612361114242</div>
+<div class="row"><a href="https://maps.app.goo.gl/g4FDvEZmroRGbyY6A?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
+</div>
+<div class="panel" id="baher-mon">
+<div class="row"><span class="label">Day off:</span>Day off</div>
+</div>
+<div class="panel" id="baher-tue">
+<div class="row"><span class="label">Outlet:</span>HAI_T Ghanam Nuqra_DS(GT)_MN_BR</div>
+<div class="row"><span class="label">Unicode:</span>96612361114242</div>
+<div class="row"><a href="https://maps.app.goo.gl/g4FDvEZmroRGbyY6A?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
+</div>
+<div class="panel" id="baher-wed">
+<div class="row"><span class="label">Outlet:</span>HAI_T Ghanam Nuqra_DS(GT)_MN_BR</div>
+<div class="row"><span class="label">Unicode:</span>96612361114242</div>
+<div class="row"><a href="https://maps.app.goo.gl/g4FDvEZmroRGbyY6A?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
+</div>
+<div class="panel" id="baher-thu">
+<div class="row"><span class="label">Outlet:</span>HAI_T Ghanam Nuqra_DS(GT)_MN_BR</div>
+<div class="row"><span class="label">Unicode:</span>96612361114242</div>
+<div class="row"><a href="https://maps.app.goo.gl/g4FDvEZmroRGbyY6A?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
+</div>
+<div class="panel" id="baher-fri">
+<div class="row"><span class="label">Outlet:</span>HAI_T Ghanam Nuqra_DS(GT)_MN_BR</div>
+<div class="row"><span class="label">Unicode:</span>96612361114242</div>
+<div class="row"><a href="https://maps.app.goo.gl/g4FDvEZmroRGbyY6A?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
+</div>
+<div class="panel" id="baher-sat">
+<div class="row"><span class="label">Outlet:</span>HAI_T Ghanam Nuqra_DS(GT)_MN_BR</div>
+<div class="row"><span class="label">Unicode:</span>96612361114242</div>
+<div class="row"><a href="https://maps.app.goo.gl/g4FDvEZmroRGbyY6A?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
+</div>
+</section>
+<hr class="divider"/>
+<!-- 5) Wahatal -->
+<section class="promoter" data-promoter="wahatal">
+<h2>Omar Farhan Omar Alshammari (Day)<br/>Jamal Mohammed Makhlouf (Night)</h2>
+<div class="days">
+<button aria-expanded="false" class="dayBtn sun" data-target="wahatal-sun">SUN</button>
+<button aria-expanded="false" class="dayBtn mon" data-target="wahatal-mon">MON</button>
+<button aria-expanded="false" class="dayBtn tue" data-target="wahatal-tue">TUE</button>
+<button aria-expanded="false" class="dayBtn wed" data-target="wahatal-wed">WED</button>
+<button aria-expanded="false" class="dayBtn thu" data-target="wahatal-thu">THU</button>
+<button aria-expanded="false" class="dayBtn fri" data-target="wahatal-fri">FRI</button>
+<button aria-expanded="false" class="dayBtn sat" data-target="wahatal-sat">SAT</button>
+</div>
+<div class="panel" id="wahatal-sun">
+<div class="row"><span class="label">Outlet:</span>HAI_Wahatal Mutamayuz_SIS(TB)MN_BR</div>
+<div class="row"><span class="label">Unicode:</span>96612361116420</div>
+<div class="row"><a href="https://goo.gl/maps/UXRxe8sX5jW3xSzU9" rel="noopener" target="_blank">Open Google Maps</a></div>
+<div class="row"><span class="label">Shifts:</span> Day / Omar • Night / Jamal</div>
+</div>
+<div class="panel" id="wahatal-mon">
+<div class="row"><span class="label">Outlet:</span>HAI_Wahatal Mutamayuz_SIS(TB)MN_BR</div>
+<div class="row"><span class="label">Unicode:</span>96612361116420</div>
+<div class="row"><a href="https://goo.gl/maps/UXRxe8sX5jW3xSzU9" rel="noopener" target="_blank">Open Google Maps</a></div>
+<div class="row"><span class="label">Shifts:</span> Day / Omar • Night / Jamal</div>
+</div>
+<div class="panel" id="wahatal-tue">
+<div class="row"><span class="label">Outlet:</span>HAI_Wahatal Mutamayuz_SIS(TB)MN_BR</div>
+<div class="row"><span class="label">Unicode:</span>96612361116420</div>
+<div class="row"><a href="https://goo.gl/maps/UXRxe8sX5jW3xSzU9" rel="noopener" target="_blank">Open Google Maps</a></div>
+<div class="row"><span class="label">Shifts:</span> Day / Omar • Night / Jamal</div>
+</div>
+<div class="panel" id="wahatal-wed">
+<div class="row"><span class="label">Outlet:</span>HAI_Wahatal Mutamayuz_SIS(TB)MN_BR</div>
+<div class="row"><span class="label">Unicode:</span>96612361116420</div>
+<div class="row"><a href="https://goo.gl/maps/UXRxe8sX5jW3xSzU9" rel="noopener" target="_blank">Open Google Maps</a></div>
+<div class="row"><span class="label">Shifts:</span> Day / Omar • Night / Jamal</div>
+</div>
+<div class="panel" id="wahatal-thu">
+<div class="row"><span class="label">Outlet:</span>HAI_Wahatal Mutamayuz_SIS(TB)MN_BR</div>
+<div class="row"><span class="label">Unicode:</span>96612361116420</div>
+<div class="row"><a href="https://goo.gl/maps/UXRxe8sX5jW3xSzU9" rel="noopener" target="_blank">Open Google Maps</a></div>
+<div class="row"><span class="label">Shifts:</span> Day / Omar • Night / Jamal</div>
+</div>
+<div class="panel" id="wahatal-fri">
+<div class="row"><span class="label">Outlet:</span>HAI_Wahatal Mutamayuz_SIS(TB)MN_BR</div>
+<div class="row"><span class="label">Unicode:</span>96612361116420</div>
+<div class="row"><a href="https://goo.gl/maps/UXRxe8sX5jW3xSzU9" rel="noopener" target="_blank">Open Google Maps</a></div>
+<div class="row"><span class="label">Shifts:</span> Night only • Omar (Jamal off)</div>
+</div>
+<div class="panel" id="wahatal-sat">
+<div class="row"><span class="label">Outlet:</span>HAI_Wahatal Mutamayuz_SIS(TB)MN_BR</div>
+<div class="row"><span class="label">Unicode:</span>96612361116420</div>
+<div class="row"><a href="https://goo.gl/maps/UXRxe8sX5jW3xSzU9" rel="noopener" target="_blank">Open Google Maps</a></div>
+<div class="row"><span class="label">Shifts:</span> Night only • Jamal (Omar off)</div>
+</div>
+</section>
+<p class="note">Note: Weekly template for April 2026. Only the included outlets are shown.</p>
+</div>
+<script>
+    (function(){
+      const buttons = document.querySelectorAll(".dayBtn");
+
+      function closePanelsInSamePromoter(btn){
+        const promoter = btn.closest(".promoter");
+        if(!promoter) return;
+        promoter.querySelectorAll(".panel").forEach(p => p.classList.remove("show"));
+        promoter.querySelectorAll(".dayBtn").forEach(b => b.setAttribute("aria-expanded","false"));
+      }
+
+      buttons.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const targetId = btn.getAttribute("data-target");
+          const panel = document.getElementById(targetId);
+          if(!panel) return;
+
+          // If this panel is already open, close it directly (failsafe).
+          if(panel.classList.contains("show")){
+            panel.classList.remove("show");
+            btn.setAttribute("aria-expanded","false");
+            return;
+          }
+
+          // Otherwise, close others in the same promoter then open this one.
+          closePanelsInSamePromoter(btn);
+          panel.classList.add("show");
+          btn.setAttribute("aria-expanded","true");
+        });
+      });
+    })();
+  
+    (function(){
+      const htmlEl = document.documentElement;
+      const toggle = document.getElementById("themeToggle");
+      if(!toggle) return;
+
+      function setTheme(mode){
+        if(mode === "dark"){
+          htmlEl.setAttribute("data-theme","dark");
+          document.body.classList.add("dark");
+          toggle.textContent = "Light Mode ☀️";
+          try{ localStorage.setItem("hailTheme","dark"); }catch(e){}
+        }else{
+          htmlEl.removeAttribute("data-theme");
+          document.body.classList.remove("dark");
+          toggle.textContent = "Dark Mode 🌙";
+          try{ localStorage.setItem("hailTheme","light"); }catch(e){}
+        }
+      }
+
+      // init
+      let saved = null;
+      try{ saved = localStorage.getItem("hailTheme"); }catch(e){}
+      if(saved === "dark") setTheme("dark");
+      else if(saved === "light") setTheme("light");
+
+      toggle.addEventListener("click", () => {
+        const isDark = htmlEl.getAttribute("data-theme") === "dark" || document.body.classList.contains("dark");
+        setTheme(isDark ? "light" : "dark");
+      });
+    })();
+
+  </script>
+</body>
+</html>
