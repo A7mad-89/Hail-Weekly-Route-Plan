@@ -255,15 +255,25 @@
 .dayBtn.wed{ color:#ffffff; } /* default */
 
 body:not(.dark) .dayBtn.wed{
-  color:#ffffff;                 /* white fill */
-  -webkit-text-stroke: 0.6px #B5C1C1;  /* very light gray outline */
-  text-stroke: 0.6px #B5C1C1;
-  text-shadow: 0 0 0.6px rgba(181,193,193,0.35); /* soft edge */
+  color:#ffffff;
+  -webkit-text-stroke: 0.65px #B5C1C1;
+  text-stroke: 0.65px #B5C1C1;
+  text-shadow:
+    0.65px 0 0 #B5C1C1,
+   -0.65px 0 0 #B5C1C1,
+    0 0.65px 0 #B5C1C1,
+    0 -0.65px 0 #B5C1C1;
 }
 
 body.dark .dayBtn.wed{
-  -webkit-text-stroke: 0px transparent; /* no outline in Dark Mode */
-  text-shadow: none;
+  color:#ffffff;
+  -webkit-text-stroke: 0.65px #B5C1C1;
+  text-stroke: 0.65px #B5C1C1;
+  text-shadow:
+    0.65px 0 0 #B5C1C1,
+   -0.65px 0 0 #B5C1C1,
+    0 0.65px 0 #B5C1C1,
+    0 -0.65px 0 #B5C1C1;
 }
   
     .sectionBadge{
