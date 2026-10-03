@@ -292,18 +292,37 @@ body.dark .dayBtn.wed{
     }
 
   
-/* ===== Hail final enhancements (matched to Qassim reference) ===== */
-.row{font-size:clamp(15px,3.8vw,17px);line-height:1.42;white-space:nowrap;overflow-x:auto;scrollbar-width:none;}
+
+/* ===== Hail final review refinements ===== */
+.row{
+  font-size:clamp(15px,3.8vw,17px);
+  line-height:1.42;
+  white-space:nowrap;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
 .row::-webkit-scrollbar{display:none;}
 .panel{max-width:100%;padding:12px 14px;}
 .noteLabel{color:#FFD700;font-weight:900;}
+.noteValue{color:#FF3B30;font-weight:900;}
+.noteName{color:#FFFFFF;font-weight:500;text-shadow:0 1px 2px rgba(0,0,0,.55);}
+.noteDash{font-weight:700;}
 .dayOffText{color:#E67E22;font-weight:900;font-size:clamp(16px,4vw,18px);}
+.compactNoteRow{overflow:visible !important;white-space:nowrap !important;}
+.compactNoteText{font-size:clamp(8px,2.35vw,11px);line-height:1.15;}
+.noteContinuation{padding-left:43px;margin-top:1px;}
+.currentDate{
+  text-align:center;
+  font-weight:900;
+  font-size:clamp(13px,3.5vw,16px);
+  letter-spacing:.2px;
+  color:var(--promoterColor);
+  margin:-6px 0 18px;
+}
 .shiftTime{display:block;font-size:13px;font-weight:650;color:var(--muted);margin-top:3px;}
 .pairedRep{display:block;}
 .pairedRep + .pairedRep{margin-top:16px;}
 .pairedRep .shiftTime{margin-top:4px;}
-
-/* ===== Category visual grouping ===== */
 .categoryBox{
   border:2px solid rgba(70,135,138,.48);
   border-radius:22px;
@@ -317,18 +336,9 @@ html[data-theme="dark"] .categoryBox, body.dark .categoryBox{
   box-shadow:0 6px 18px rgba(0,0,0,.18);
 }
 @media(max-width:420px){
-  .row{font-size:15px;}
   .categoryBox{padding:5px 10px 12px;border-radius:18px;margin:16px 0;}
-}
-
-/* ===== Current date ===== */
-.currentDate{
-  text-align:center;
-  font-weight:900;
-  font-size:14px;
-  letter-spacing:.35px;
-  color:var(--promoterColor);
-  margin:-6px 0 20px;
+  .compactNoteText{font-size:clamp(8px,2.3vw,10px);}
+  .noteContinuation{padding-left:39px;}
 }
 </style>
 <!-- Fonts: Poppins (Title) + Inter (Body) -->
@@ -343,8 +353,9 @@ html[data-theme="dark"] .categoryBox, body.dark .categoryBox{
 <span class="titleLine2">(October 2026)</span>
 </h1>
 <p class="subtitle">Weekly pattern (Sunday → Saturday).<br/>Tap a day to show details.<br/>Location links open Google Maps.</p><div class="currentDate" id="currentDate">—</div>
-<div class="categoryBox"><div class="sectionBadge">DS (GT/TB/SIS):</div><section class="promoter" data-promoter="mahmoud">
-<h2>Mahmoud Monther Jabr (Night)<span class="shiftTime">From 4:00 PM to 12:00 AM</span></h2>
+<div class="categoryBox"><div class="sectionBadge">DS (GT/TB/SIS):</div>
+<section class="promoter" data-promoter="mahmoud">
+<h2>Mahmoud Monther Jabr (Night)<span style="display:block;font-size:13px;font-weight:600;color:var(--muted);margin-top:3px;">From 4:00 PM to 12:00 AM</span></h2>
 <div class="days">
 <button aria-expanded="false" class="dayBtn sun" data-target="mahmoud-sun">SUN</button>
 <button aria-expanded="false" class="dayBtn mon" data-target="mahmoud-mon">MON</button>
@@ -358,8 +369,8 @@ html[data-theme="dark"] .categoryBox, body.dark .categoryBox{
 <div class="row"><span class="label">Outlet:</span>HAI_Central markets_DS_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>966123117667</div>
 <div class="row"><a href="https://maps.app.goo.gl/2fyGHM2Vu1PN955e9?g_st=com.google.maps.preview.copy" rel="noopener" target="_blank">Open Google Maps</a></div>
-<div class="row"><span class="noteLabel">Note:</span> <span style="color:#FF6B6B;font-weight:800;">Sick Leave</span></div>
-</div>
+
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="mahmoud-mon">
 <div class="row"><span class="label">Outlet:</span>HAI_Central markets_DS_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>966123117667</div>
@@ -386,10 +397,12 @@ html[data-theme="dark"] .categoryBox, body.dark .categoryBox{
 <div class="row"><a href="https://maps.app.goo.gl/2fyGHM2Vu1PN955e9?g_st=com.google.maps.preview.copy" rel="noopener" target="_blank">Open Google Maps</a></div>
 <div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="mahmoud-sat">
-<div class="row"><span class="noteLabel">Note:</span> <span class="dayOffText">Day Off</span></div>
-</div>
-</section><hr class="divider"/><section class="promoter" data-promoter="khaled">
-<h2>Khaled Mazen Al Jaafarawi (Night)<span class="shiftTime">From 5:00 PM to 1:00 AM</span></h2>
+
+<div class="row"><span class="noteLabel">Note:</span> <span class="dayOffText">Day Off</span></div></div>
+</section>
+<hr class="divider"/>
+<section class="promoter" data-promoter="khaled">
+<h2>Khaled Mazen Al Jaafarawi (Night)<span style="display:block;font-size:13px;font-weight:600;color:var(--muted);margin-top:3px;">From 5:00 PM to 1:00 AM</span></h2>
 <div class="days">
 <button aria-expanded="false" class="dayBtn sun" data-target="khaled-sun">SUN</button>
 <button aria-expanded="false" class="dayBtn mon" data-target="khaled-mon">MON</button>
@@ -430,10 +443,12 @@ html[data-theme="dark"] .categoryBox, body.dark .categoryBox{
 <div class="row"><a href="https://maps.app.goo.gl/5iYCBKqcfwuqBAjY8?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
 <div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="khaled-sat">
-<div class="row"><span class="noteLabel">Note:</span> <span class="dayOffText">Day Off</span></div>
-</div>
-</section><hr class="divider"/><section class="promoter" data-promoter="mamdouh">
-<h2>Mamdouh Auwad Alshammari (Night)<span class="shiftTime">From 5:00 PM to 1:00 AM</span></h2>
+
+<div class="row"><span class="noteLabel">Note:</span> <span class="dayOffText">Day Off</span></div></div>
+</section>
+<hr class="divider"/>
+<section class="promoter" data-promoter="mamdouh">
+<h2>Mamdouh Auwad Alshammari (Night)<span style="display:block;font-size:13px;font-weight:600;color:var(--muted);margin-top:3px;">From 5:00 PM to 1:00 AM</span></h2>
 <div class="days">
 <button aria-expanded="false" class="dayBtn sun" data-target="mamdouh-sun">SUN</button>
 <button aria-expanded="false" class="dayBtn mon" data-target="mamdouh-mon">MON</button>
@@ -447,37 +462,39 @@ html[data-theme="dark"] .categoryBox, body.dark .categoryBox{
 <div class="row"><span class="label">Outlet:</span>HAI_T Ghanam Nuqra_DS(GT)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361114242</div>
 <div class="row"><a href="https://maps.app.goo.gl/g4FDvEZmroRGbyY6A?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
-<div class="row"><span class="noteLabel">Note:</span> <span style="color:#FF3B30;font-weight:800;">Absent</span></div>
-</div>
+
+<div class="row compactNoteRow"><span class="noteLabel">Note:</span> <span class="noteValue compactNoteText">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div></div>
 <div class="panel" id="mamdouh-mon">
-<div class="row"><span class="noteLabel">Note:</span> <span class="dayOffText">Day Off</span></div>
-</div>
+
+<div class="row"><span class="noteLabel">Note:</span> <span class="dayOffText">Day Off</span></div></div>
 <div class="panel" id="mamdouh-tue">
 <div class="row"><span class="label">Outlet:</span>HAI_T Ghanam Nuqra_DS(GT)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361114242</div>
 <div class="row"><a href="https://maps.app.goo.gl/g4FDvEZmroRGbyY6A?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
-<div class="row"><span class="noteLabel">Note:</span> </div></div>
+<div class="row compactNoteRow"><span class="noteLabel">Note:</span> <span class="noteValue compactNoteText">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div></div>
 <div class="panel" id="mamdouh-wed">
 <div class="row"><span class="label">Outlet:</span>HAI_T Ghanam Nuqra_DS(GT)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361114242</div>
 <div class="row"><a href="https://maps.app.goo.gl/g4FDvEZmroRGbyY6A?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
-<div class="row"><span class="noteLabel">Note:</span> </div></div>
+<div class="row compactNoteRow"><span class="noteLabel">Note:</span> <span class="noteValue compactNoteText">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div></div>
 <div class="panel" id="mamdouh-thu">
 <div class="row"><span class="label">Outlet:</span>HAI_T Ghanam Nuqra_DS(GT)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361114242</div>
 <div class="row"><a href="https://maps.app.goo.gl/g4FDvEZmroRGbyY6A?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
-<div class="row"><span class="noteLabel">Note:</span> </div></div>
+<div class="row compactNoteRow"><span class="noteLabel">Note:</span> <span class="noteValue compactNoteText">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div></div>
 <div class="panel" id="mamdouh-fri">
 <div class="row"><span class="label">Outlet:</span>HAI_T Ghanam Nuqra_DS(GT)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361114242</div>
 <div class="row"><a href="https://maps.app.goo.gl/g4FDvEZmroRGbyY6A?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
-<div class="row"><span class="noteLabel">Note:</span> </div></div>
+<div class="row compactNoteRow"><span class="noteLabel">Note:</span> <span class="noteValue compactNoteText">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div></div>
 <div class="panel" id="mamdouh-sat">
 <div class="row"><span class="label">Outlet:</span>HAI_T Ghanam Nuqra_DS(GT)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361114242</div>
 <div class="row"><a href="https://maps.app.goo.gl/g4FDvEZmroRGbyY6A?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
-<div class="row"><span class="noteLabel">Note:</span> </div></div>
-</section><hr class="divider"/><section class="promoter" data-promoter="wahatal">
+<div class="row compactNoteRow"><span class="noteLabel">Note:</span> <span class="noteValue compactNoteText">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div></div>
+</section>
+<hr class="divider"/>
+<section class="promoter" data-promoter="wahatal">
 <h2><span class="pairedRep">Omar Farhan Omar Alshammari (Day)<span class="shiftTime">From 10:00 AM to 6:00 PM</span></span><span class="pairedRep">Eslam Emadedin Shalabi (Night)<span class="shiftTime">From 6:00 PM to 2:00 AM</span></span></h2>
 <div class="days">
 <button aria-expanded="false" class="dayBtn sun" data-target="wahatal-sun">SUN</button>
@@ -493,52 +510,54 @@ html[data-theme="dark"] .categoryBox, body.dark .categoryBox{
 <div class="row"><span class="label">Unicode:</span>96612361116420</div>
 <div class="row"><a href="https://goo.gl/maps/UXRxe8sX5jW3xSzU9" rel="noopener" target="_blank">Open Google Maps</a></div>
 <div class="row"><span class="label">Shifts:</span> Day / Omar • Night / Eslam</div>
-<div class="row"><span class="noteLabel">Note:</span> <span style="color:#FF3B30;font-weight:800;">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div>
-</div>
+
+<div class="row compactNoteRow"><span class="noteLabel">Note:</span> <span class="noteName compactNoteText">Omar</span> <span class="noteDash compactNoteText">-</span> <span class="noteValue compactNoteText">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div></div>
 <div class="panel" id="wahatal-mon">
 <div class="row"><span class="label">Outlet:</span>HAI_Wahatal Mutamayuz_SIS(TB)MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361116420</div>
 <div class="row"><a href="https://goo.gl/maps/UXRxe8sX5jW3xSzU9" rel="noopener" target="_blank">Open Google Maps</a></div>
 <div class="row"><span class="label">Shifts:</span> Day / Omar • Night / Eslam</div>
-<div class="row"><span class="noteLabel">Note:</span> <span style="color:#FF3B30;font-weight:800;">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div>
-</div>
+
+<div class="row compactNoteRow"><span class="noteLabel">Note:</span> <span class="noteName compactNoteText">Omar</span> <span class="noteDash compactNoteText">-</span> <span class="noteValue compactNoteText">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div></div>
 <div class="panel" id="wahatal-tue">
 <div class="row"><span class="label">Outlet:</span>HAI_Wahatal Mutamayuz_SIS(TB)MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361116420</div>
 <div class="row"><a href="https://goo.gl/maps/UXRxe8sX5jW3xSzU9" rel="noopener" target="_blank">Open Google Maps</a></div>
 <div class="row"><span class="label">Shifts:</span> Day / Omar • Night / Eslam</div>
-<div class="row"><span class="noteLabel">Note:</span> <span style="color:#FF3B30;font-weight:800;">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div>
-</div>
+
+<div class="row compactNoteRow"><span class="noteLabel">Note:</span> <span class="noteName compactNoteText">Omar</span> <span class="noteDash compactNoteText">-</span> <span class="noteValue compactNoteText">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div></div>
 <div class="panel" id="wahatal-wed">
 <div class="row"><span class="label">Outlet:</span>HAI_Wahatal Mutamayuz_SIS(TB)MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361116420</div>
 <div class="row"><a href="https://goo.gl/maps/UXRxe8sX5jW3xSzU9" rel="noopener" target="_blank">Open Google Maps</a></div>
 <div class="row"><span class="label">Shifts:</span> Day / Omar • Night / Eslam</div>
-<div class="row"><span class="noteLabel">Note:</span> <span style="color:#FF3B30;font-weight:800;">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div>
-</div>
+
+<div class="row compactNoteRow"><span class="noteLabel">Note:</span> <span class="noteName compactNoteText">Omar</span> <span class="noteDash compactNoteText">-</span> <span class="noteValue compactNoteText">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div></div>
 <div class="panel" id="wahatal-thu">
 <div class="row"><span class="label">Outlet:</span>HAI_Wahatal Mutamayuz_SIS(TB)MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361116420</div>
 <div class="row"><a href="https://goo.gl/maps/UXRxe8sX5jW3xSzU9" rel="noopener" target="_blank">Open Google Maps</a></div>
 <div class="row"><span class="label">Shifts:</span> Day / Omar • Night / Eslam</div>
-<div class="row"><span class="noteLabel">Note:</span> <span style="color:#FF3B30;font-weight:800;">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div>
-</div>
+
+<div class="row compactNoteRow"><span class="noteLabel">Note:</span> <span class="noteName compactNoteText">Omar</span> <span class="noteDash compactNoteText">-</span> <span class="noteValue compactNoteText">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div></div>
 <div class="panel" id="wahatal-fri">
 <div class="row"><span class="label">Outlet:</span>HAI_Wahatal Mutamayuz_SIS(TB)MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361116420</div>
 <div class="row"><a href="https://goo.gl/maps/UXRxe8sX5jW3xSzU9" rel="noopener" target="_blank">Open Google Maps</a></div>
-<div class="row"><span class="label">Shifts:</span> Day only • Omar</div>
-<div class="row"><span class="noteLabel">Note:</span> <span style="color:#FF3B30;font-weight:800;">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div>
-</div>
+<div class="row"><span class="label">Shifts:</span> Night only • Omar</div>
+
+<div class="row"><span class="noteLabel">Note:</span> <span class="noteName">Eslam</span> <span class="noteDash">-</span> <span class="dayOffText">Day Off</span></div><div class="row compactNoteRow noteContinuation"><span class="noteName compactNoteText">Omar</span> <span class="noteDash compactNoteText">-</span> <span class="noteValue compactNoteText">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div></div>
 <div class="panel" id="wahatal-sat">
 <div class="row"><span class="label">Outlet:</span>HAI_Wahatal Mutamayuz_SIS(TB)MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361116420</div>
 <div class="row"><a href="https://goo.gl/maps/UXRxe8sX5jW3xSzU9" rel="noopener" target="_blank">Open Google Maps</a></div>
 <div class="row"><span class="label">Shifts:</span> Night only • Eslam</div>
-<div class="row"><span class="noteLabel">Note:</span> <span style="color:#FF3B30;font-weight:800;">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div>
-</div>
-</section><hr class="divider"/><section class="promoter" data-promoter="eslam">
-<h2>Osman Alawadh (Night)<span class="shiftTime">From 5:00 PM to 1:00 AM</span></h2>
+
+<div class="row"><span class="noteLabel">Note:</span> <span class="noteName">Omar</span> <span class="noteDash">-</span> <span class="dayOffText">Day Off</span></div></div>
+</section>
+<hr class="divider"/>
+<section class="promoter" data-promoter="eslam">
+<h2>Osman Alawadh (Night)<span style="display:block;font-size:13px;font-weight:600;color:var(--muted);margin-top:3px;">From 5:00 PM to 1:00 AM</span></h2>
 <div class="days">
 <button aria-expanded="false" class="dayBtn sun" data-target="eslam-sun">SUN</button>
 <button aria-expanded="false" class="dayBtn mon" data-target="eslam-mon">MON</button>
@@ -563,26 +582,22 @@ html[data-theme="dark"] .categoryBox, body.dark .categoryBox{
 <div class="row"><span class="label">Unicode:</span>966123117488</div>
 <div class="row"><a href="https://maps.app.goo.gl/Mv32T3YYyqb7gSBg7?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
 <div class="row"><span class="noteLabel">Note:</span> </div></div>
-<div class="panel" id="eslam-wed">
-<div class="row"><span class="noteLabel">Note:</span> <span class="dayOffText">Day Off</span></div>
-</div>
+<div class="panel" id="eslam-wed"><div class="row"><span class="label">Outlet:</span>HAI_Markaz Mutlaq Nasar_DS(GT)_MN_BR</div><div class="row"><span class="label">Unicode:</span>966123117488</div><div class="row"><a href="https://maps.app.goo.gl/Mv32T3YYyqb7gSBg7?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div><div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="eslam-thu">
 <div class="row"><span class="label">Outlet:</span>HAI_Markaz Mutlaq Nasar_DS(GT)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>966123117488</div>
 <div class="row"><a href="https://maps.app.goo.gl/Mv32T3YYyqb7gSBg7?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
 <div class="row"><span class="noteLabel">Note:</span> </div></div>
-<div class="panel" id="eslam-fri">
-<div class="row"><span class="label">Outlet:</span>HAI_Markaz Mutlaq Nasar_DS(GT)_MN_BR</div>
-<div class="row"><span class="label">Unicode:</span>966123117488</div>
-<div class="row"><a href="https://maps.app.goo.gl/Mv32T3YYyqb7gSBg7?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
-<div class="row"><span class="noteLabel">Note:</span> </div></div>
+<div class="panel" id="eslam-fri"><div class="row"><span class="noteLabel">Note:</span> <span class="dayOffText">Day Off</span></div></div>
 <div class="panel" id="eslam-sat">
 <div class="row"><span class="label">Outlet:</span>HAI_Markaz Mutlaq Nasar_DS(GT)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>966123117488</div>
 <div class="row"><a href="https://maps.app.goo.gl/Mv32T3YYyqb7gSBg7?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
 <div class="row"><span class="noteLabel">Note:</span> </div></div>
-</section><hr class="divider"/><section class="promoter" data-promoter="nawaf">
-<h2>Nawaf Mohammed Alnoumsi (Night)<span class="shiftTime">From 5:00 PM to 1:00 AM</span></h2>
+</section>
+<hr class="divider"/>
+<section class="promoter" data-promoter="nawaf">
+<h2>Nawaf Mohammed Alnoumsi (Night)<span style="display:block;font-size:13px;font-weight:600;color:var(--muted);margin-top:3px;">From 5:00 PM to 1:00 AM</span></h2>
 <div class="days">
 <button aria-expanded="false" class="dayBtn sun" data-target="nawaf-sun">SUN</button>
 <button aria-expanded="false" class="dayBtn mon" data-target="nawaf-mon">MON</button>
@@ -598,8 +613,8 @@ html[data-theme="dark"] .categoryBox, body.dark .categoryBox{
 <div class="row"><a href="https://maps.app.goo.gl/oJ6LW5DqKoM47aJE6?g_st=ic" rel="noopener" target="_blank">Open Google Maps</a></div>
 <div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="nawaf-mon">
-<div class="row"><span class="noteLabel">Note:</span> <span class="dayOffText">Day Off</span></div>
-</div>
+
+<div class="row"><span class="noteLabel">Note:</span> <span class="dayOffText">Day Off</span></div></div>
 <div class="panel" id="nawaf-tue">
 <div class="row"><span class="label">Outlet:</span>HAI_Waqt Ranz_DS(GT)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361117629</div>
@@ -625,21 +640,11 @@ html[data-theme="dark"] .categoryBox, body.dark .categoryBox{
 <div class="row"><span class="label">Unicode:</span>96612361117629</div>
 <div class="row"><a href="https://maps.app.goo.gl/oJ6LW5DqKoM47aJE6?g_st=ic" rel="noopener" target="_blank">Open Google Maps</a></div>
 <div class="row"><span class="noteLabel">Note:</span> </div></div>
-</section><hr class="divider"/></div>
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="categoryBox"><div class="sectionBadge">BR/DS:</div><section class="promoter" data-promoter="jamal">
-<h2>Jamal Mohammed Makhlouf (Night)<span class="shiftTime">From 5:00 PM to 1:00 AM</span></h2>
+</section>
+<hr class="divider"/>
+</div><div class="categoryBox"><div class="sectionBadge">BR/DS:</div>
+<section class="promoter" data-promoter="jamal">
+<h2>Jamal Mohammed Makhlouf (Night)<span style="display:block;font-size:13px;font-weight:600;color:var(--muted);margin-top:3px;">From 5:00 PM to 1:00 AM</span></h2>
 <div class="days">
 <button aria-expanded="false" class="dayBtn sun" data-target="jamal-sun">SUN</button>
 <button aria-expanded="false" class="dayBtn mon" data-target="jamal-mon">MON</button>
@@ -680,8 +685,10 @@ html[data-theme="dark"] .categoryBox, body.dark .categoryBox{
 <div class="row"><span class="label">Unicode:</span>9661231129293</div>
 <div class="row"><a href="https://maps.app.goo.gl/LojwifgSntEEb7sbA" rel="noopener" target="_blank">Open Google Maps</a></div>
 <div class="row"><span class="noteLabel">Note:</span> </div></div>
-</section><hr class="divider"/><section class="promoter" data-promoter="baher">
-<h2>Baher Emadedin Shalabi (Night)<span class="shiftTime">From 5:00 PM to 1:00 AM</span></h2>
+</section>
+<hr class="divider"/>
+<section class="promoter" data-promoter="baher">
+<h2>Baher Emadedin Shalabi (Night)<span style="display:block;font-size:13px;font-weight:600;color:var(--muted);margin-top:3px;">From 5:00 PM to 1:00 AM</span></h2>
 <div class="days">
 <button aria-expanded="false" class="dayBtn sun" data-target="baher-sun">SUN</button>
 <button aria-expanded="false" class="dayBtn mon" data-target="baher-mon">MON</button>
@@ -722,11 +729,8 @@ html[data-theme="dark"] .categoryBox, body.dark .categoryBox{
 <div class="row"><span class="label">Unicode:</span>96612361118684</div>
 <div class="row"><a href="https://maps.app.goo.gl/9pELKkdP5Hp94wWW6?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
 <div class="row"><span class="noteLabel">Note:</span> </div></div>
-</section></div>
-
-
-
-<p class="note">Note: Weekly template for October 2026.<br/>Only the included outlets are shown.</p>
+</section>
+</div><p class="note">Note: Weekly template for October 2026.<br/>Only the included outlets are shown.</p>
 </div>
 <script>
     (function(){
@@ -796,15 +800,14 @@ html[data-theme="dark"] .categoryBox, body.dark .categoryBox{
 (function(){
   const el = document.getElementById('currentDate');
   if(!el) return;
-  const parts = new Intl.DateTimeFormat('en-GB',{
-    timeZone:'Asia/Riyadh',
-    weekday:'long',
-    day:'numeric',
-    month:'long',
-    year:'numeric'
-  }).formatToParts(new Date());
-  const get = t => parts.find(p => p.type === t)?.value || '';
-  el.textContent = `${get('weekday')} ${get('day')} ${get('month')} ${get('year')}`;
+  try{
+    const d = new Date();
+    el.textContent = new Intl.DateTimeFormat('en-GB', {
+      weekday:'long', day:'numeric', month:'long', year:'numeric'
+    }).format(d);
+  }catch(e){
+    el.textContent = '';
+  }
 })();
 </script></body>
 </html>
