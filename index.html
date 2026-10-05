@@ -291,7 +291,63 @@ body.dark .dayBtn.wed{
       box-shadow: 0 8px 18px rgba(0,0,0,.16);
     }
 
-  </style>
+  
+/* ===== Hail final enhancements ===== */
+.row{font-size:clamp(15px,3.8vw,17px);line-height:1.42;white-space:nowrap;overflow-x:auto;scrollbar-width:none;}
+.row::-webkit-scrollbar{display:none;}
+.panel{max-width:100%;padding:12px 14px;}
+.noteLabel{color:#FFD700;font-weight:900;}
+.noteValue{color:#FF3B30;font-weight:900;}
+.noteName{color:var(--text);font-weight:700;}
+.dayOffText{color:#E67E22;font-weight:900;font-size:clamp(16px,4vw,18px);}
+.activeTempText{color:#18864B;font-weight:900;}
+.activeWrap{display:flex;justify-content:center;margin:12px 0 22px;}
+.activeBadge{width:132px;height:132px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(145deg,#0B6E75,#18A6A8);color:#fff;box-shadow:0 10px 28px rgba(0,95,115,.28),inset 0 0 0 5px rgba(255,255,255,.14);text-align:center;}
+.activeBadge .activeLabel{font-size:15px;font-weight:900;letter-spacing:.3px;}
+.activeBadge .activeCount{font-size:42px;line-height:1;font-weight:950;margin:4px 0;}
+.activeBadge .activeDate{font-size:10px;font-weight:700;opacity:.9;}
+.sectionBadge{margin-top:48px;}
+.activeWrap + .brStatusCard{margin-top:-8px;}
+.shiftTime{display:block;font-size:13px;font-weight:650;color:var(--muted);margin-top:3px;}
+.pairedRep{display:block;}
+.pairedRep + .pairedRep{margin-top:16px;}
+.pairedRep .shiftTime{margin-top:4px;}
+
+/* ===== Category visual grouping ===== */
+.categoryBox{
+  border:2px solid rgba(70,135,138,.48);
+  border-radius:22px;
+  padding:6px 14px 14px;
+  margin:18px 0;
+  box-shadow:0 5px 16px rgba(0,0,0,.055);
+}
+.categoryBox > .sectionBadge{margin-top:2px;}
+html[data-theme="dark"] .categoryBox, body.dark .categoryBox{
+  border-color:rgba(127,183,255,.38);
+  box-shadow:0 6px 18px rgba(0,0,0,.18);
+}
+@media(max-width:420px){
+  .categoryBox{padding:5px 10px 12px;border-radius:18px;margin:16px 0;}
+  .row{font-size:15px}
+  .activeBadge{width:118px;height:118px}
+  .activeBadge .activeCount{font-size:38px}
+}
+
+/* ===== Today's BR Status ===== */
+.brStatusCard{max-width:720px;margin:-8px auto 26px;padding:0 10px;}
+.brStatusDate{text-align:center;font-weight:900;font-size:14px;letter-spacing:.35px;color:var(--promoterColor);margin:0 0 8px;}
+.brStatusTable{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden;border:1px solid rgba(70,135,138,.35);border-radius:14px;background:rgba(255,255,255,.34);box-shadow:0 5px 16px rgba(0,0,0,.045);}
+.brStatusTable th,.brStatusTable td{padding:9px 11px;text-align:left;font-size:13px;border-bottom:1px solid rgba(70,135,138,.18);}
+.brStatusTable th{font-weight:900;background:rgba(70,135,138,.10);}
+.brStatusTable tr:last-child td{border-bottom:0;}
+.brStatusTable th:last-child,.brStatusTable td:last-child{text-align:center;width:40%;white-space:nowrap;}
+.brStatusActive{color:#18864B;font-weight:900;}
+.brStatusOff{color:#E67E22;font-weight:900;}
+.brStatusAbsent{color:#D93025;font-weight:900;}
+html[data-theme="dark"] .brStatusTable,body.dark .brStatusTable{background:rgba(255,255,255,.06);border-color:rgba(127,183,255,.30);}
+html[data-theme="dark"] .brStatusTable th,body.dark .brStatusTable th{background:rgba(127,183,255,.10);}
+@media(max-width:420px){.brStatusCard{padding:0 2px;margin-top:-6px}.brStatusTable th,.brStatusTable td{padding:8px 7px;font-size:12px}.brStatusTable th:last-child,.brStatusTable td:last-child{width:38%;}.brStatusDate{font-size:13px}}
+</style>
 <!-- Fonts: Poppins (Title) + Inter (Body) -->
 </head>
 <body>
@@ -303,8 +359,19 @@ body.dark .dayBtn.wed{
 <span class="titleLine1">Hail – Weekly Route Plan</span>
 <span class="titleLine2">(October 2026)</span>
 </h1>
-<p class="subtitle">Weekly pattern (Sunday → Saturday).<br/>Tap a day to show details.<br/>Location links open Google Maps.</p>
-<div class="sectionBadge">DS (GT/TB/SIS):</div>
+<p class="subtitle">Weekly pattern (Sunday → Saturday).<br/>Tap a day to show details.<br/>Location links open Google Maps.</p><div class="activeWrap">
+<div class="activeBadge" id="activeBRBadge">
+<div class="activeLabel">Active BRs</div>
+<div class="activeCount">—</div>
+</div>
+</div><div class="brStatusCard">
+<div class="brStatusDate" id="brStatusDate">—</div>
+<table aria-label="Today BR Status" class="brStatusTable">
+<thead><tr><th>BR Name</th><th>Status</th></tr></thead>
+<tbody id="brStatusBody"></tbody>
+</table>
+</div>
+<div class="categoryBox"><div class="sectionBadge">DS (GT/TB/SIS):</div>
 <section class="promoter" data-promoter="mahmoud">
 <h2>Mahmoud Monther Jabr (Night)<span style="display:block;font-size:13px;font-weight:600;color:var(--muted);margin-top:3px;">From 4:00 PM to 12:00 AM</span></h2>
 <div class="days">
@@ -320,36 +387,34 @@ body.dark .dayBtn.wed{
 <div class="row"><span class="label">Outlet:</span>HAI_Central markets_DS_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>966123117667</div>
 <div class="row"><a href="https://maps.app.goo.gl/2fyGHM2Vu1PN955e9?g_st=com.google.maps.preview.copy" rel="noopener" target="_blank">Open Google Maps</a></div>
-<div class="row"><span style="color:#FFD700;font-weight:800;">Note:</span> <span style="color:#FF6B6B;font-weight:800;">Sick Leave</span></div>
-</div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="mahmoud-mon">
 <div class="row"><span class="label">Outlet:</span>HAI_Central markets_DS_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>966123117667</div>
 <div class="row"><a href="https://maps.app.goo.gl/2fyGHM2Vu1PN955e9?g_st=com.google.maps.preview.copy" rel="noopener" target="_blank">Open Google Maps</a></div>
-</div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="mahmoud-tue">
 <div class="row"><span class="label">Outlet:</span>HAI_Central markets_DS_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>966123117667</div>
 <div class="row"><a href="https://maps.app.goo.gl/2fyGHM2Vu1PN955e9?g_st=com.google.maps.preview.copy" rel="noopener" target="_blank">Open Google Maps</a></div>
-</div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="mahmoud-wed">
 <div class="row"><span class="label">Outlet:</span>HAI_Central markets_DS_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>966123117667</div>
 <div class="row"><a href="https://maps.app.goo.gl/2fyGHM2Vu1PN955e9?g_st=com.google.maps.preview.copy" rel="noopener" target="_blank">Open Google Maps</a></div>
-</div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="mahmoud-thu">
 <div class="row"><span class="label">Outlet:</span>HAI_Central markets_DS_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>966123117667</div>
 <div class="row"><a href="https://maps.app.goo.gl/2fyGHM2Vu1PN955e9?g_st=com.google.maps.preview.copy" rel="noopener" target="_blank">Open Google Maps</a></div>
-</div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="mahmoud-fri">
 <div class="row"><span class="label">Outlet:</span>HAI_Central markets_DS_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>966123117667</div>
 <div class="row"><a href="https://maps.app.goo.gl/2fyGHM2Vu1PN955e9?g_st=com.google.maps.preview.copy" rel="noopener" target="_blank">Open Google Maps</a></div>
-<div class="row"><span style="color:#FFD700;font-weight:800;">Note:</span> <span>Covering at Wahatal Motamayiz</span></div>
-</div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="mahmoud-sat">
-<div class="row"><span class="label">Day off:</span>Day off</div>
+<div class="row"><span class="noteLabel">Note:</span> <span class="dayOffText">Day Off</span></div>
 </div>
 </section>
 <hr class="divider"/>
@@ -368,34 +433,34 @@ body.dark .dayBtn.wed{
 <div class="row"><span class="label">Outlet:</span>HAI_Mosasa Mirad_DS_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>966123117486</div>
 <div class="row"><a href="https://maps.app.goo.gl/5iYCBKqcfwuqBAjY8?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
-</div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="khaled-mon">
 <div class="row"><span class="label">Outlet:</span>HAI_Mosasa Mirad_DS_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>966123117486</div>
 <div class="row"><a href="https://maps.app.goo.gl/5iYCBKqcfwuqBAjY8?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
-</div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="khaled-tue">
 <div class="row"><span class="label">Outlet:</span>HAI_Mosasa Mirad_DS_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>966123117486</div>
 <div class="row"><a href="https://maps.app.goo.gl/5iYCBKqcfwuqBAjY8?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
-</div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="khaled-wed">
 <div class="row"><span class="label">Outlet:</span>HAI_Mosasa Mirad_DS_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>966123117486</div>
 <div class="row"><a href="https://maps.app.goo.gl/5iYCBKqcfwuqBAjY8?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
-</div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="khaled-thu">
 <div class="row"><span class="label">Outlet:</span>HAI_Mosasa Mirad_DS_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>966123117486</div>
 <div class="row"><a href="https://maps.app.goo.gl/5iYCBKqcfwuqBAjY8?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
-</div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="khaled-fri">
 <div class="row"><span class="label">Outlet:</span>HAI_Mosasa Mirad_DS_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>966123117486</div>
 <div class="row"><a href="https://maps.app.goo.gl/5iYCBKqcfwuqBAjY8?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
-</div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="khaled-sat">
-<div class="row"><span class="label">Day off:</span>Day off</div>
+<div class="row"><span class="noteLabel">Note:</span> <span class="dayOffText">Day Off</span></div>
 </div>
 </section>
 <hr class="divider"/>
@@ -414,40 +479,39 @@ body.dark .dayBtn.wed{
 <div class="row"><span class="label">Outlet:</span>HAI_T Ghanam Nuqra_DS(GT)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361114242</div>
 <div class="row"><a href="https://maps.app.goo.gl/g4FDvEZmroRGbyY6A?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
-
-<div class="row"><span style="color:#FFD700;font-weight:800;">Note:</span> <span style="color:#FF3B30;font-weight:800;">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div></div>
+<div class="row"><span class="noteLabel">Note:</span> <span class="noteValue">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div></div>
 <div class="panel" id="mamdouh-mon">
-<div class="row"><span class="label">Day off:</span>Day off</div>
+<div class="row"><span class="noteLabel">Note:</span> <span class="dayOffText">Day Off</span></div>
 </div>
 <div class="panel" id="mamdouh-tue">
 <div class="row"><span class="label">Outlet:</span>HAI_T Ghanam Nuqra_DS(GT)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361114242</div>
 <div class="row"><a href="https://maps.app.goo.gl/g4FDvEZmroRGbyY6A?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
-<div class="row"><span style="color:#FFD700;font-weight:800;">Note:</span> <span style="color:#FF3B30;font-weight:800;">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div></div>
+<div class="row"><span class="noteLabel">Note:</span> <span class="noteValue">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div></div>
 <div class="panel" id="mamdouh-wed">
 <div class="row"><span class="label">Outlet:</span>HAI_T Ghanam Nuqra_DS(GT)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361114242</div>
 <div class="row"><a href="https://maps.app.goo.gl/g4FDvEZmroRGbyY6A?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
-<div class="row"><span style="color:#FFD700;font-weight:800;">Note:</span> <span style="color:#FF3B30;font-weight:800;">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div></div>
+<div class="row"><span class="noteLabel">Note:</span> <span class="noteValue">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div></div>
 <div class="panel" id="mamdouh-thu">
 <div class="row"><span class="label">Outlet:</span>HAI_T Ghanam Nuqra_DS(GT)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361114242</div>
 <div class="row"><a href="https://maps.app.goo.gl/g4FDvEZmroRGbyY6A?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
-<div class="row"><span style="color:#FFD700;font-weight:800;">Note:</span> <span style="color:#FF3B30;font-weight:800;">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div></div>
+<div class="row"><span class="noteLabel">Note:</span> <span class="noteValue">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div></div>
 <div class="panel" id="mamdouh-fri">
 <div class="row"><span class="label">Outlet:</span>HAI_T Ghanam Nuqra_DS(GT)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361114242</div>
 <div class="row"><a href="https://maps.app.goo.gl/g4FDvEZmroRGbyY6A?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
-<div class="row"><span style="color:#FFD700;font-weight:800;">Note:</span> <span style="color:#FF3B30;font-weight:800;">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div></div>
+<div class="row"><span class="noteLabel">Note:</span> <span class="noteValue">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div></div>
 <div class="panel" id="mamdouh-sat">
 <div class="row"><span class="label">Outlet:</span>HAI_T Ghanam Nuqra_DS(GT)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361114242</div>
 <div class="row"><a href="https://maps.app.goo.gl/g4FDvEZmroRGbyY6A?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
-<div class="row"><span style="color:#FFD700;font-weight:800;">Note:</span> <span style="color:#FF3B30;font-weight:800;">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div></div>
+<div class="row"><span class="noteLabel">Note:</span> <span class="noteValue">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div></div>
 </section>
 <hr class="divider"/>
 <section class="promoter" data-promoter="wahatal">
-<h2>Omar Farhan Omar Alshammari (Day)<span style="display:block;font-size:13px;font-weight:600;color:var(--muted);margin-top:3px;">From 10:00 AM to 6:00 PM</span>Eslam Emadedin Shalabi (Night)<span style="display:block;font-size:13px;font-weight:600;color:var(--muted);margin-top:3px;">From 6:00 PM to 2:00 AM</span></h2>
+<h2><span class="pairedRep">Omar Farhan Omar Alshammari (Day)<span class="shiftTime">From 10:00 AM to 6:00 PM</span></span><span class="pairedRep">Eslam Emadedin Shalabi (Night)<span class="shiftTime">From 6:00 PM to 2:00 AM</span></span></h2>
 <div class="days">
 <button aria-expanded="false" class="dayBtn sun" data-target="wahatal-sun">SUN</button>
 <button aria-expanded="false" class="dayBtn mon" data-target="wahatal-mon">MON</button>
@@ -461,52 +525,38 @@ body.dark .dayBtn.wed{
 <div class="row"><span class="label">Outlet:</span>HAI_Wahatal Mutamayuz_SIS(TB)MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361116420</div>
 <div class="row"><a href="https://goo.gl/maps/UXRxe8sX5jW3xSzU9" rel="noopener" target="_blank">Open Google Maps</a></div>
-<div class="row"><span class="label">Shifts:</span> Day / Omar • Night / Eslam</div>
-
-<div class="row"><span style="color:#FFD700;font-weight:800;">Note:</span> <span style="color:#FFFFFF;font-weight:800;">Omar</span> <span style="color:#FF3B30;font-weight:800;">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div></div>
+<div class="row"><span class="label">Shifts:</span> Day / Omar • Night / Eslam</div><div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="wahatal-mon">
 <div class="row"><span class="label">Outlet:</span>HAI_Wahatal Mutamayuz_SIS(TB)MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361116420</div>
 <div class="row"><a href="https://goo.gl/maps/UXRxe8sX5jW3xSzU9" rel="noopener" target="_blank">Open Google Maps</a></div>
-<div class="row"><span class="label">Shifts:</span> Day / Omar • Night / Eslam</div>
-
-<div class="row"><span style="color:#FFD700;font-weight:800;">Note:</span> <span style="color:#FFFFFF;font-weight:800;">Omar</span> <span style="color:#FF3B30;font-weight:800;">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div></div>
+<div class="row"><span class="label">Shifts:</span> Day / Omar • Night / Eslam</div><div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="wahatal-tue">
 <div class="row"><span class="label">Outlet:</span>HAI_Wahatal Mutamayuz_SIS(TB)MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361116420</div>
 <div class="row"><a href="https://goo.gl/maps/UXRxe8sX5jW3xSzU9" rel="noopener" target="_blank">Open Google Maps</a></div>
-<div class="row"><span class="label">Shifts:</span> Day / Omar • Night / Eslam</div>
-
-<div class="row"><span style="color:#FFD700;font-weight:800;">Note:</span> <span style="color:#FFFFFF;font-weight:800;">Omar</span> <span style="color:#FF3B30;font-weight:800;">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div></div>
+<div class="row"><span class="label">Shifts:</span> Day / Omar • Night / Eslam</div><div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="wahatal-wed">
 <div class="row"><span class="label">Outlet:</span>HAI_Wahatal Mutamayuz_SIS(TB)MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361116420</div>
 <div class="row"><a href="https://goo.gl/maps/UXRxe8sX5jW3xSzU9" rel="noopener" target="_blank">Open Google Maps</a></div>
-<div class="row"><span class="label">Shifts:</span> Day / Omar • Night / Eslam</div>
-
-<div class="row"><span style="color:#FFD700;font-weight:800;">Note:</span> <span style="color:#FFFFFF;font-weight:800;">Omar</span> <span style="color:#FF3B30;font-weight:800;">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div></div>
+<div class="row"><span class="label">Shifts:</span> Day / Omar • Night / Eslam</div><div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="wahatal-thu">
 <div class="row"><span class="label">Outlet:</span>HAI_Wahatal Mutamayuz_SIS(TB)MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361116420</div>
 <div class="row"><a href="https://goo.gl/maps/UXRxe8sX5jW3xSzU9" rel="noopener" target="_blank">Open Google Maps</a></div>
-<div class="row"><span class="label">Shifts:</span> Day / Omar • Night / Eslam</div>
-
-<div class="row"><span style="color:#FFD700;font-weight:800;">Note:</span> <span style="color:#FFFFFF;font-weight:800;">Omar</span> <span style="color:#FF3B30;font-weight:800;">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div></div>
+<div class="row"><span class="label">Shifts:</span> Day / Omar • Night / Eslam</div><div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="wahatal-fri">
 <div class="row"><span class="label">Outlet:</span>HAI_Wahatal Mutamayuz_SIS(TB)MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361116420</div>
 <div class="row"><a href="https://goo.gl/maps/UXRxe8sX5jW3xSzU9" rel="noopener" target="_blank">Open Google Maps</a></div>
-<div class="row"><span class="label">Shifts:</span> Night only • Mahmoud</div>
-
-<div class="row"><span style="color:#FFD700;font-weight:800;">Note:</span> <span style="color:#FFFFFF;font-weight:800;">Eslam</span> - <span style="color:#E67E22;font-weight:800;">Day Off</span></div>
-<div class="row"><span style="display:inline-block;width:42px;"></span><span style="color:#FFFFFF;font-weight:800;">Omar</span> - <span style="color:#FF3B30;font-weight:800;">Inactive (غير نشط حالياً - قيد المراجعة الإدارية)</span></div></div>
+<div class="row"><span class="label">Shifts:</span> Night only • Omar</div>
+<div class="row"><span class="noteLabel">Note:</span> <span class="noteName">Eslam</span> - <span class="dayOffText">Day Off</span></div></div>
 <div class="panel" id="wahatal-sat">
 <div class="row"><span class="label">Outlet:</span>HAI_Wahatal Mutamayuz_SIS(TB)MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361116420</div>
 <div class="row"><a href="https://goo.gl/maps/UXRxe8sX5jW3xSzU9" rel="noopener" target="_blank">Open Google Maps</a></div>
-<div class="row"><span class="label">Shifts:</span> Night only • Eslam</div>
-
-<div class="row"><span style="color:#FFD700;font-weight:800;">Note:</span> <span style="color:#FFFFFF;font-weight:800;">Omar</span> <span>Day off</span></div></div>
+<div class="row"><span class="label">Shifts:</span> Night only • Eslam</div><div class="row"><span class="noteLabel">Note:</span> <span class="noteName">Omar</span> – <span class="dayOffText">Day Off</span></div></div>
 </section>
 <hr class="divider"/>
 <section class="promoter" data-promoter="eslam">
@@ -524,29 +574,31 @@ body.dark .dayBtn.wed{
 <div class="row"><span class="label">Outlet:</span>HAI_Markaz Mutlaq Nasar_DS(GT)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>966123117488</div>
 <div class="row"><a href="https://maps.app.goo.gl/Mv32T3YYyqb7gSBg7?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
-</div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="eslam-mon">
 <div class="row"><span class="label">Outlet:</span>HAI_Markaz Mutlaq Nasar_DS(GT)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>966123117488</div>
 <div class="row"><a href="https://maps.app.goo.gl/Mv32T3YYyqb7gSBg7?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
-</div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="eslam-tue">
 <div class="row"><span class="label">Outlet:</span>HAI_Markaz Mutlaq Nasar_DS(GT)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>966123117488</div>
 <div class="row"><a href="https://maps.app.goo.gl/Mv32T3YYyqb7gSBg7?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
-</div>
-<div class="panel" id="eslam-wed"><div class="row"><span class="label">Outlet:</span>HAI_Markaz Mutlaq Nasar_DS(GT)_MN_BR</div><div class="row"><span class="label">Unicode:</span>966123117488</div><div class="row"><a href="https://maps.app.goo.gl/Mv32T3YYyqb7gSBg7?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div></div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
+<div class="panel" id="eslam-wed"><div class="row"><span class="label">Outlet:</span>HAI_Markaz Mutlaq Nasar_DS(GT)_MN_BR</div><div class="row"><span class="label">Unicode:</span>966123117488</div><div class="row"><a href="https://maps.app.goo.gl/Mv32T3YYyqb7gSBg7?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div><div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="eslam-thu">
 <div class="row"><span class="label">Outlet:</span>HAI_Markaz Mutlaq Nasar_DS(GT)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>966123117488</div>
 <div class="row"><a href="https://maps.app.goo.gl/Mv32T3YYyqb7gSBg7?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
+<div class="panel" id="eslam-fri">
+<div class="row"><span class="noteLabel">Note:</span> <span class="dayOffText">Day Off</span></div>
 </div>
-<div class="panel" id="eslam-fri"><div class="row"><span class="label">Day off:</span>Day off</div></div>
 <div class="panel" id="eslam-sat">
 <div class="row"><span class="label">Outlet:</span>HAI_Markaz Mutlaq Nasar_DS(GT)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>966123117488</div>
 <div class="row"><a href="https://maps.app.goo.gl/Mv32T3YYyqb7gSBg7?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
-</div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
 </section>
 <hr class="divider"/>
 <section class="promoter" data-promoter="nawaf">
@@ -564,38 +616,38 @@ body.dark .dayBtn.wed{
 <div class="row"><span class="label">Outlet:</span>HAI_Waqt Ranz_DS(GT)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361117629</div>
 <div class="row"><a href="https://maps.app.goo.gl/oJ6LW5DqKoM47aJE6?g_st=ic" rel="noopener" target="_blank">Open Google Maps</a></div>
-</div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="nawaf-mon">
-<div class="row"><span class="label">Day off:</span>Day off</div>
+<div class="row"><span class="noteLabel">Note:</span> <span class="dayOffText">Day Off</span></div>
 </div>
 <div class="panel" id="nawaf-tue">
 <div class="row"><span class="label">Outlet:</span>HAI_Waqt Ranz_DS(GT)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361117629</div>
 <div class="row"><a href="https://maps.app.goo.gl/oJ6LW5DqKoM47aJE6?g_st=ic" rel="noopener" target="_blank">Open Google Maps</a></div>
-</div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="nawaf-wed">
 <div class="row"><span class="label">Outlet:</span>HAI_Waqt Ranz_DS(GT)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361117629</div>
 <div class="row"><a href="https://maps.app.goo.gl/oJ6LW5DqKoM47aJE6?g_st=ic" rel="noopener" target="_blank">Open Google Maps</a></div>
-</div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="nawaf-thu">
 <div class="row"><span class="label">Outlet:</span>HAI_Waqt Ranz_DS(GT)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361117629</div>
 <div class="row"><a href="https://maps.app.goo.gl/oJ6LW5DqKoM47aJE6?g_st=ic" rel="noopener" target="_blank">Open Google Maps</a></div>
-</div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="nawaf-fri">
 <div class="row"><span class="label">Outlet:</span>HAI_Waqt Ranz_DS(GT)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361117629</div>
 <div class="row"><a href="https://maps.app.goo.gl/oJ6LW5DqKoM47aJE6?g_st=ic" rel="noopener" target="_blank">Open Google Maps</a></div>
-</div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="nawaf-sat">
 <div class="row"><span class="label">Outlet:</span>HAI_Waqt Ranz_DS(GT)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361117629</div>
 <div class="row"><a href="https://maps.app.goo.gl/oJ6LW5DqKoM47aJE6?g_st=ic" rel="noopener" target="_blank">Open Google Maps</a></div>
-</div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
 </section>
 <hr class="divider"/>
-<div class="sectionBadge">BR/DS:</div>
+</div><div class="categoryBox"><div class="sectionBadge">BR/DS:</div>
 <section class="promoter" data-promoter="jamal">
 <h2>Jamal Mohammed Makhlouf (Night)<span style="display:block;font-size:13px;font-weight:600;color:var(--muted);margin-top:3px;">From 5:00 PM to 1:00 AM</span></h2>
 <div class="days">
@@ -607,37 +659,39 @@ body.dark .dayBtn.wed{
 <button aria-expanded="false" class="dayBtn fri" data-target="jamal-fri">FRI</button>
 <button aria-expanded="false" class="dayBtn sat" data-target="jamal-sat">SAT</button>
 </div>
-<div class="panel" id="jamal-sun"><div class="row"><span class="label">Day off:</span>Day off</div></div>
+<div class="panel" id="jamal-sun">
+<div class="row"><span class="noteLabel">Note:</span> <span class="dayOffText">Day Off</span></div>
+</div>
 <div class="panel" id="jamal-mon">
 <div class="row"><span class="label">Outlet:</span>HAI_T. Lojeen AlShamal AlGedaya_BR-DS(GT)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>9661231129293</div>
 <div class="row"><a href="https://maps.app.goo.gl/LojwifgSntEEb7sbA" rel="noopener" target="_blank">Open Google Maps</a></div>
-</div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="jamal-tue">
 <div class="row"><span class="label">Outlet:</span>HAI_T. Lojeen AlShamal AlGedaya_BR-DS(GT)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>9661231129293</div>
 <div class="row"><a href="https://maps.app.goo.gl/LojwifgSntEEb7sbA" rel="noopener" target="_blank">Open Google Maps</a></div>
-</div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="jamal-wed">
 <div class="row"><span class="label">Outlet:</span>HAI_T. Lojeen AlShamal AlGedaya_BR-DS(GT)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>9661231129293</div>
 <div class="row"><a href="https://maps.app.goo.gl/LojwifgSntEEb7sbA" rel="noopener" target="_blank">Open Google Maps</a></div>
-</div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="jamal-thu">
 <div class="row"><span class="label">Outlet:</span>HAI_T. Lojeen AlShamal AlGedaya_BR-DS(GT)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>9661231129293</div>
 <div class="row"><a href="https://maps.app.goo.gl/LojwifgSntEEb7sbA" rel="noopener" target="_blank">Open Google Maps</a></div>
-</div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="jamal-fri">
 <div class="row"><span class="label">Outlet:</span>HAI_T. Lojeen AlShamal AlGedaya_BR-DS(GT)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>9661231129293</div>
 <div class="row"><a href="https://maps.app.goo.gl/LojwifgSntEEb7sbA" rel="noopener" target="_blank">Open Google Maps</a></div>
-</div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="jamal-sat">
 <div class="row"><span class="label">Outlet:</span>HAI_T. Lojeen AlShamal AlGedaya_BR-DS(GT)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>9661231129293</div>
 <div class="row"><a href="https://maps.app.goo.gl/LojwifgSntEEb7sbA" rel="noopener" target="_blank">Open Google Maps</a></div>
-</div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
 </section>
 <hr class="divider"/>
 <section class="promoter" data-promoter="baher">
@@ -655,35 +709,37 @@ body.dark .dayBtn.wed{
 <div class="row"><span class="label">Outlet:</span>HAI_Wahat Al Mutamayuz Musalat (2)_BR-DS(TB)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361118684</div>
 <div class="row"><a href="https://maps.app.goo.gl/9pELKkdP5Hp94wWW6?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
-</div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="baher-mon">
 <div class="row"><span class="label">Outlet:</span>HAI_Wahat Al Mutamayuz Musalat (2)_BR-DS(TB)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361118684</div>
 <div class="row"><a href="https://maps.app.goo.gl/9pELKkdP5Hp94wWW6?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
-</div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="baher-tue">
 <div class="row"><span class="label">Outlet:</span>HAI_Wahat Al Mutamayuz Musalat (2)_BR-DS(TB)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361118684</div>
 <div class="row"><a href="https://maps.app.goo.gl/9pELKkdP5Hp94wWW6?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
-</div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="baher-wed">
 <div class="row"><span class="label">Outlet:</span>HAI_Wahat Al Mutamayuz Musalat (2)_BR-DS(TB)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361118684</div>
 <div class="row"><a href="https://maps.app.goo.gl/9pELKkdP5Hp94wWW6?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
-</div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
 <div class="panel" id="baher-thu">
 <div class="row"><span class="label">Outlet:</span>HAI_Wahat Al Mutamayuz Musalat (2)_BR-DS(TB)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361118684</div>
 <div class="row"><a href="https://maps.app.goo.gl/9pELKkdP5Hp94wWW6?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
+<div class="panel" id="baher-fri">
+<div class="row"><span class="noteLabel">Note:</span> <span class="dayOffText">Day Off</span></div>
 </div>
-<div class="panel" id="baher-fri"><div class="row"><span class="label">Day off:</span>Day off</div></div>
 <div class="panel" id="baher-sat">
 <div class="row"><span class="label">Outlet:</span>HAI_Wahat Al Mutamayuz Musalat (2)_BR-DS(TB)_MN_BR</div>
 <div class="row"><span class="label">Unicode:</span>96612361118684</div>
 <div class="row"><a href="https://maps.app.goo.gl/9pELKkdP5Hp94wWW6?g_st=iw" rel="noopener" target="_blank">Open Google Maps</a></div>
-</div>
+<div class="row"><span class="noteLabel">Note:</span> </div></div>
 </section>
-<p class="note">Note: Weekly template for October 2026.<br/>Only the included outlets are shown.</p>
+</div><p class="note">Note: Weekly template for October 2026.<br/>Only the included outlets are shown.</p>
 </div>
 <script>
     (function(){
@@ -749,5 +805,107 @@ body.dark .dayBtn.wed{
     })();
 
   </script>
+
+<script>
+(function(){
+  // Today's BR Status is driven by each BR's Note field.
+  // "Active – Temporary POS Assignment" is explicitly treated as Active.
+  const reps = [
+    {name:"Mahmoud Monther Jabr", promoter:"mahmoud"},
+    {name:"Khaled Mazen Al Jaafarawi", promoter:"khaled"},
+    {name:"Mamdouh Auwad Alshammari", promoter:"mamdouh"},
+    {name:"Omar Farhan Omar Alshammari", promoter:"wahatal"},
+    {name:"Eslam Emadedin Shalabi", promoter:"wahatal"},
+    {name:"Osman Alawadh", promoter:"eslam"},
+    {name:"Nawaf Mohammed Alnoumsi", promoter:"nawaf"},
+    {name:"Jamal Mohammed Makhlouf", promoter:"jamal"},
+    {name:"Baher Emadedin Shalabi", promoter:"baher"}
+  ];
+  const dayKey={Sun:'sun',Mon:'mon',Tue:'tue',Wed:'wed',Thu:'thu',Fri:'fri',Sat:'sat'};
+  const now=new Date();
+  const parts=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Riyadh',weekday:'short',day:'2-digit',month:'short',year:'numeric'}).formatToParts(now);
+  const get=t=>parts.find(p=>p.type===t)?.value||'';
+  const day=dayKey[get('weekday')];
+
+  function panelFor(rep){
+    const sec=document.querySelector(`section[data-promoter="${rep.promoter}"]`);
+    if(!sec || !day) return null;
+    return sec.querySelector(`.panel[id$="-${day}"]`);
+  }
+
+  function noteFor(rep,panel){
+    if(!panel) return '';
+    const row=[...panel.querySelectorAll(':scope > .row')].find(r=>r.querySelector('.noteLabel'));
+    if(!row) return '';
+    const full=row.textContent.replace(/Note\s*:/i,'').trim();
+    if(!full) return '';
+
+    // In shared outlets, a named note applies only to the named BR.
+    const lower=full.toLowerCase(), name=rep.name.toLowerCase();
+    const samePromoter=reps.filter(r=>r.promoter===rep.promoter);
+    const aliases={
+      'Omar Farhan Omar Alshammari':['omar','omar farhan omar alshammari'],
+      'Eslam Emadedin Shalabi':['eslam','eslam emadedin shalabi']
+    };
+    let namedForSomeone=false, namedForThis=false;
+    samePromoter.forEach(r=>{
+      const candidates=aliases[r.name] || [r.name.toLowerCase()];
+      if(candidates.some(a=>lower.includes(a.toLowerCase()))){
+        namedForSomeone=true;
+        if(r.name===rep.name) namedForThis=true;
+      }
+    });
+    if(namedForSomeone && !namedForThis) return '';
+    return full;
+  }
+
+  function statusFromNote(raw){
+    const n=raw.toLowerCase().replace(/[–—]/g,'-');
+    if(n.includes('active - temporary pos assignment')) return ['Active – Temporary POS Assignment','brStatusActive',true];
+    if(n.includes('day off')) return ['Day Off','brStatusOff',false];
+    if(n.includes('inactive')) return ['Inactive','brStatusAbsent',false];
+    if(n.includes('sick leave')) return ['Sick Leave','brStatusAbsent',false];
+    if(n.includes('annual leave')) return ['Annual Leave','brStatusAbsent',false];
+    if(n.includes('emergency leave')) return ['Emergency Leave','brStatusAbsent',false];
+    if(n.includes('unpaid leave')) return ['Unpaid Leave','brStatusAbsent',false];
+    if(n.includes('absent')) return ['Absent','brStatusAbsent',false];
+    if(n.includes('leave')) return [raw,'brStatusAbsent',false];
+    // Any other non-empty Note is not counted as Active.
+    return [raw,'brStatusAbsent',false];
+  }
+
+  let active=0;
+  const statuses=[];
+  reps.forEach(rep=>{
+    const panel=panelFor(rep);
+    const raw=noteFor(rep,panel);
+    let status='Active', cls='brStatusActive', isActive=true;
+    if(raw) [status,cls,isActive]=statusFromNote(raw);
+    if(isActive) active++;
+    statuses.push({name:rep.name,status,cls});
+  });
+
+  const count=document.querySelector('#activeBRBadge .activeCount');
+  if(count) count.textContent=active;
+
+  const dateEl=document.getElementById('brStatusDate');
+  if(dateEl) dateEl.textContent=`${get('weekday').toUpperCase()} – ${get('day')} ${get('month').toUpperCase()} ${get('year')}`;
+
+  const body=document.getElementById('brStatusBody');
+  if(body){
+    body.innerHTML='';
+    statuses.forEach(item=>{
+      const tr=document.createElement('tr');
+      const a=document.createElement('td');
+      const b=document.createElement('td');
+      a.textContent=item.name;
+      b.textContent=item.status;
+      b.className=item.cls;
+      tr.append(a,b);
+      body.appendChild(tr);
+    });
+  }
+})();
+</script>
 </body>
 </html>
